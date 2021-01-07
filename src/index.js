@@ -68,7 +68,7 @@ class Vole extends React.Component {
   render() {
     return (
       <div>
-        <h1>Vole: a simplified computer</h1>
+        <h1>Vole: a Simplified Computer</h1>
         <CodeInput />
         <h1>Registers</h1>
         <Registers />
