@@ -6,8 +6,8 @@ import './index.css';
 class CodeInput extends React.Component {
   render() {
     return (
-
       <div className='program'>
+        <h1>Program</h1>
         <form>
           <textarea rows='40' cols='40'>
             Input machine instructions here.
