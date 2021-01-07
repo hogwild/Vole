@@ -8,10 +8,11 @@ class CodeInput extends React.Component {
     return (
 
       <div className='program'>
-      <textarea rows='40' cols='40'>
-        Input machine instructions here.
-      </textarea>
-      </form>
+        <form>
+          <textarea rows='40' cols='40'>
+            Input machine instructions here.
+          </textarea>
+        </form>
       </div>      
     )
   }
