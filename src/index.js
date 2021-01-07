@@ -6,13 +6,8 @@ import './index.css';
 class CodeInput extends React.Component {
   render() {
     return (
+
       <div className='program'>
-      <h1>Program</h1>
-      <form>
-      {/* <label>
-        Name:
-        <input type='text' name='name' />
-      </label> */}
       <textarea rows='40' cols='40'>
         Input machine instructions here.
       </textarea>
@@ -75,10 +70,12 @@ class Registers extends React.Component {
 }
 
 
+
 class RAM extends React.Component {
   render() {
     let i = 0;
     let ram = [];
+
     for(i=0; i<this.props.num; i++){
       ram.push(<Cell index={i.toString(16).toUpperCase()} value='FF'/>);
     };
