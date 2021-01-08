@@ -10,7 +10,11 @@
 */
 
 export function run (prgm) {
-    parseProgram();
+    let p = parseProgram(prgm);
+    // let p = parseProgram(prgm);
+    // p.filter(w => {
+
+    // })
 
 }
 
@@ -19,5 +23,18 @@ function decodeInstruction(str) {
 }
 
 function parseProgram(str) {
-    console.log(str.split(' '));
+    let p = str.split('\n')
+        .filter(w => {
+            if(w.length === 0 || w[0] === '#'){
+                return false
+            }
+            return true
+        }).map(w => {
+            return w.substr(0, 4)
+        });
+    // let q = p.map(w => {
+    //    return w.substr(0, 4)
+    // });
+    console.log(p);
+    return p;
 }

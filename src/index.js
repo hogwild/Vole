@@ -20,7 +20,8 @@ class CodeForm extends React.Component {
   // }
 
   handleSubmit(event) {
-    {console.log(this.input.current.value.split(" "))};
+    // {console.log(this.input.current.value.split(" "))};
+    {run(this.input.current.value)};
     alert('A program was submitted: '+ this.input.current.value);
     event.preventDefault();
     
