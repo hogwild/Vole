@@ -13,6 +13,9 @@ class CodeInput extends React.Component {
             Input machine instructions here.
           </textarea>
         </form>
+        <button>
+          Run
+        </button>
       </div>      
     )
   }

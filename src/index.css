@@ -28,11 +28,11 @@ code {
 
 .cell .index{
   width: 30px;
-  background-color: rgb(249, 105, 105); 
+  background-color: rgb(141, 191, 238); 
 }
 
 .registers {
-  background-color: lightblue;
+  background-color: lightyellow;
   /* border: 3px solid #73AD21; */
   position: absolute;
   padding: 10px;
