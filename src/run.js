@@ -7,19 +7,33 @@
     (2) finding the memory cell by its address
     (3) changing the color of the specified register/memory cell
     (4) changing the value of the specified reigister/memory cell
+5. vole instructions:
+op-code operand description
+    1     RXY   Load register R with the bit pattern found in XY  
 */
 
 export function run (prgm) {
-    let p = parseProgram(prgm);
     // let p = parseProgram(prgm);
-    // p.filter(w => {
-
-    // })
-
+    // let instr;
+    // for (instr of p) {
+    //     decodeInstruction(instr);
+    // };
+    return parseProgram(prgm);
 }
 
 function decodeInstruction(str) {
-   
+    switch (str[0]) {
+        case '1':
+            console.log("Load register R from XY");
+            break;
+        case '2':
+            console.log("To be done");
+            break;
+        default: 
+            console.log('No such an instruction.')
+            break;
+    };
+    
 }
 
 function parseProgram(str) {

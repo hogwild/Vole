@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import update from 'react-addons-update';
 import './index.css';
 import { run } from './run.js';
 
@@ -21,9 +22,13 @@ class CodeForm extends React.Component {
 
   handleSubmit(event) {
     // {console.log(this.input.current.value.split(" "))};
-    {run(this.input.current.value)};
-    alert('A program was submitted: '+ this.input.current.value);
+    // {run(this.input.current.value)};
+    // alert('A program was submitted: '+ this.input.current.value);
+    // console.log(this.input.current.value);
+    
+    this.props.onSubmit(this.input.current.value);
     event.preventDefault();
+    
     
   }
 
@@ -32,11 +37,12 @@ class CodeForm extends React.Component {
     return (
       <div className='program'>
         <h1>Program</h1>
+        {/* <form > */}
         <form onSubmit={this.handleSubmit}>
           {/* <textarea rows='40' cols='40' value={this.state.value} onChange={this.handleChange}/> */}
           <textarea rows='40' cols='40' placeholder='Please input your code here.' ref={this.input}/>
           <button>
-          Run
+          Load
         </button>
         </form>
       </div>      
@@ -66,7 +72,7 @@ class Registers extends React.Component {
     let i;
     let registers = [];
     for (i = 0; i < this.props.num; i++ ) {
-      registers.push(<Cell index={i.toString(16).toUpperCase()} value='AF'/>);
+      registers.push(<Cell index={i.toString(16).toUpperCase()} value={this.props.content[i]}/>);
     };
     if(this.props.type === 'register') {
       return (
@@ -80,7 +86,7 @@ class Registers extends React.Component {
       return (
         <div className='pc'>
           <h4>Program counter</h4>
-          <Cell index='PC' value='F8'/>
+          <Cell index='PC' value={this.props.content}/>
         </div>
       )
       }else{
@@ -88,7 +94,7 @@ class Registers extends React.Component {
           return (
             <div className='ir'>
               <h4>Instruction Registor</h4>
-              <Cell index='IR' value='AFF8'/>
+              <Cell index='IR' value={this.props.content}/>
           </div>
           )
         }
@@ -98,14 +104,29 @@ class Registers extends React.Component {
 }
 
 
-
 class RAM extends React.Component {
+  // constructor(props){
+  //   super(props);
+  //   this.state ={
+  //     ram: [],
+  //   }
+  // }
   render() {
     let i = 0;
     let ram = [];
-
+    let idx;
     for(i=0; i<this.props.num; i++){
-      ram.push(<Cell index={i.toString(16).toUpperCase()} value='FF'/>);
+      idx = i.toString(16).toUpperCase();
+      if(idx.length === 1){
+        idx = '0' + idx;
+      };
+      ram.push(<Cell index={idx} value={this.props.content[i]}/>);
+      // this.setState({
+      //   ram: [...this.state.ram, <Cell index={i.toString(16).toUpperCase()} value='FF'/>],
+      // });
+      // this.setState({
+      //   ram: this.state.ram.concat([<Cell index={i.toString(16).toUpperCase()} value='FF'/>])})
+      // this.state.ram.push(<Cell index={i.toString(16).toUpperCase()} value='00'/>);
     };
   return (
     <div className='ram'>
@@ -116,22 +137,87 @@ class RAM extends React.Component {
   }
 }
 
+
 class Vole extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ramContent: Array(props.numRam).fill('00'),
+      regContent: Array(props.numReg).fill('00'),
+      pcContent: '00',
+      irContent: '0000',
+    };
+    this.runProgram = this.runProgram.bind(this);
+  }
+
+  runProgram(str){
+    // const program = this.state.program;
+    //console.log(str);
+    // event.preventDefault();
+    let inst = run(str);
+    let ramContent = this.state.ramContent;
+    let i, j;
+    for (i=0; i<inst.length; i++){
+      j = 2*i
+      ramContent[j] = inst[i].slice(0, 2);
+      ramContent[j+1] = inst[i].slice(2, 4);
+    };
+    this.setState({
+      ramContent: ramContent,
+      // regContent: Array(this.props.numReg).fill('00'),
+      pcContent: 'FF',
+      // irContent: 'FFFF',
+    })
+  
+    // console.log(instSplited);
+    // this.setState((state) => ({
+    //   ramContent: state.map((s, i) => {
+    //     if(i < instSplited.length){
+    //       return instSplited[i];
+    //     } else {
+    //       return s;
+    //     }
+    //   }),
+    //   regContent: Array(16).fill('AA'),
+    //   pcContent: 'FF',
+    //   irContent: 'FFFF',
+    // }))
+  } 
+
+  // updateState(){
+  //   this.setState({
+  //     ramContent: Array(256).fill('AA'),
+  //     regContent: Array(16).fill('AA'),
+  //     pcContent: 'FF',
+  //     irContent: 'FFFF',
+  //   });
+  // }
+    // event.preventDefault();
+    
+  
+  
+
   render() {
+    /* handling the programm here, update the content of registers, pc, ir and ram*/
+    // console.log(this.state.pcContent);
+    const regContent = this.state.regContent;
+    const pcContent = this.state.pcContent;
+    const irContent = this.state.irContent;
+    const ramContent = this.state.ramContent;
     return (
       <div>
         <h1>Vole: a simplified computer</h1>
-        <CodeForm />
+        <CodeForm onSubmit={this.runProgram}/>
         {/* <h1>Registers</h1> */}
-        <Registers num='16' type='register'/>
-        <Registers num='1' type='pc'/>
-        <Registers num='1' type='ir'/>
+        <Registers num={this.props.numReg} type='register' content={regContent}/>
+        <Registers num={1} type='pc' content={pcContent} />
+        <Registers num={1} type='ir' content={irContent} />
         {/* <h1>RAM</h1> */}
-        <RAM num='256'/>
+        <RAM num={this.props.numRam} content={ramContent}/>
+        {/* <RunButton /> */}
       </div>
-      
     )
   }
 }
 
-ReactDOM.render(<Vole />, document.getElementById('root'))
+ReactDOM.render(<Vole numReg={16} numRam={256} />, document.getElementById('root'))
