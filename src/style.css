@@ -1,0 +1,71 @@
+.CPU {
+    padding: 20px;
+    text-align: center;
+    overflow: auto;
+}
+
+.memory {
+    padding: 20px;
+    text-align: center;
+    overflow: auto;
+}
+
+.program {
+    padding: 20px;
+    text-align: center;
+    overflow: auto;
+}
+
+.program form {
+    padding: 0px;
+    text-align: center;
+    overflow: auto;
+}
+
+
+.memorycell {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.leftcolumn {
+    float: left;
+    width: 33%;
+}
+
+.rightcolumn {
+    float: right;
+    width: 66%;
+}
+
+.register-set {
+    outline:steelblue solid 1px;
+    padding: 10px;
+}
+
+/*.cell {
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+}*/
+
+.PC {
+    text-align: left;
+    outline:steelblue solid 1px;
+    padding: 20px;
+}
+
+.IR {
+    text-align: left;
+    outline:steelblue solid 1px;
+    padding: 20px; 
+}
+
+p {
+    font-size: 16px;
+}
+
+input {
+    width: 24px;
+    height: 10px;
+}
