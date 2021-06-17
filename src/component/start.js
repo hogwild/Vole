@@ -10,6 +10,15 @@ const run = () => {
     };
 };
 
+const step = () => {
+    execute(fetch());
+};
+
+export function Step(props) {
+    return <div className="startbutton">
+        <button type="button" onClick={step}>Step</button>
+    </div>
+}
 export function Start(props){
     return <div className="startbutton">
         <button type="button" onClick={run}>Run</button>
